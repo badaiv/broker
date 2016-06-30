@@ -12,8 +12,6 @@ module Broker
     format :json
     prefix :api
 
-    HOTFIX = %w(Hotfix Hotfix-s)
-    FEATURE = %w(Feature Feature-s Bugfix Bugfix-s)
     ISSUE_TYPES = ['New Feature', 'Bug', 'Improvement', 'Task', 'Sub-Task (engineering)']
     FIELD_FLAG_OPEN_PULL_REQUEST = 'customfield_11014'
     FIELD_REPOS = 'customfield_11011'
@@ -21,7 +19,6 @@ module Broker
     FIELD_BRANCH_BASE = 'customfield_11008'
 
     DEV_BRANCH = 'dev'
-    PREPROD_BRANCH = 'preprod'
     MASTER_BRANCH = 'master'
 
     GITHUB_SYSTEM_USER = 'srvc-broker'
@@ -176,7 +173,7 @@ module Broker
         issue_id = Utils.get_issue_id(issue_name)
         jira = JiraConnector.new
         issue_type = jira.get_issue_type(issue_id)
-        return true if (HOTFIX.include?(issue_type) || FEATURE.include?(issue_type) || ISSUE_TYPES.include?(issue_type))
+        return true if (ISSUE_TYPES.include?(issue_type))
         false
       end
 
